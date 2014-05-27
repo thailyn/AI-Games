@@ -24,6 +24,13 @@ namespace TicTacToe.Engine
             protected set;
         }
 
+        public TicTacToePlayer CurrentPlayer
+        {
+            get;
+            protected set;
+        }
+
+        // TODO: Set an initial value of CurrentPlayer
         public TicTacToeState(TicTacToeOptions options)
         {
             Board = new List<Mark>();
@@ -174,6 +181,7 @@ namespace TicTacToe.Engine
         }
 
         // TODO: Have this method clone the current state, instead of modifying it.
+        // TODO: Have this method determine who the player is in the next state.
         public TicTacToeState ApplyMove(TicTacToePlayer currentPlayer, TicTacToeMove newMove)
         {
             if (!(newMove is TicTacToeMove))

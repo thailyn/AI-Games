@@ -13,6 +13,7 @@ namespace TicTacToe.Engine.Interfaces
         where W : IState<T, U, V, W>
     {
         T Options { get; }
+        U CurrentPlayer { get; }
 
         bool IsEndState(out List<U> winningPlayers);
         //IPlayer GetWinningPlayer();
