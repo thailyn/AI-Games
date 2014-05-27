@@ -54,6 +54,7 @@
     <Compile Include="Game\HumanConsolePlayer.cs" />
     <Compile Include="Game\Mark.cs" />
     <Compile Include="Game\PlaceMarkMove.cs" />
+    <Compile Include="Game\RandomPlayer.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
