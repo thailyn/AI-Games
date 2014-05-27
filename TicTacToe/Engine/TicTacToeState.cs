@@ -24,13 +24,27 @@ namespace TicTacToe.Engine
             protected set;
         }
 
+        private TicTacToePlayer _currentPlayer;
         public TicTacToePlayer CurrentPlayer
         {
-            get;
-            protected set;
+            get
+            {
+                if (_currentPlayer == null && Options.Players != null && Options.Players.Count > 0)
+                {
+                    CurrentPlayer = Options.Players[0];
+                }
+
+                return _currentPlayer;
+            }
+            protected set
+            {
+                if (value != _currentPlayer)
+                {
+                    _currentPlayer = value;
+                }
+            }
         }
 
-        // TODO: Set an initial value of CurrentPlayer
         public TicTacToeState(TicTacToeOptions options)
         {
             Board = new List<Mark>();
@@ -41,6 +55,11 @@ namespace TicTacToe.Engine
                 {
                     Board.Add(new Mark(Game.Symbol.Blank, null));
                 }
+            }
+
+            if (options.Players != null && options.Players.Count > 0)
+            {
+                CurrentPlayer = options.Players[0];
             }
         }
 
