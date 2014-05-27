@@ -15,8 +15,6 @@ namespace TicTacToe.Game
             Symbol = symbol;
             Options = options;
 
-            // The following line sets CurrentState to null, as the return value of the
-            // TicTacToeState constructor is not an IState<IGameOptions> object.
             CurrentState = new TicTacToeState(Options);
         }
 
