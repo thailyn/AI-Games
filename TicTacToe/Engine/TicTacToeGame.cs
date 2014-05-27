@@ -61,7 +61,8 @@ namespace TicTacToe.Engine
                 throw new InvalidOperationException("Can not start a new game until all players are entered.");
             }
 
-            TicTacToePlayer currentPlayer = Players[0];
+            int currentPlayerIndex = 0;
+            TicTacToePlayer currentPlayer = Players[currentPlayerIndex];
             TicTacToeMove lastMove = null;
             List<TicTacToeMove> newMoves = null;
             while (!CurrentState.IsEndState())
@@ -75,6 +76,9 @@ namespace TicTacToe.Engine
                 lastMove = currentPlayer.GetMove();
                 lastMove.PerformingPlayer = currentPlayer;
                 CurrentState = CurrentState.ApplyMove(currentPlayer, lastMove);
+
+                currentPlayerIndex = (currentPlayerIndex + 1) % Players.Count;
+                currentPlayer = Players[currentPlayerIndex];
             }
 
             // notify players of end state
