@@ -91,6 +91,11 @@ namespace TicTacToe.Engine
             {
                 player.UpdateState(newMoves);
             }
+
+            foreach (var observer in Options.Observers)
+            {
+                observer.UpdateState(newMoves);
+            }
         }
 
         public void Pause()
