@@ -6,8 +6,13 @@ using System.Threading.Tasks;
 
 namespace TicTacToe.Engine.Interfaces
 {
-    public interface IGameOptions
+    public interface IGameOptions<T, U, V, W>
+        where T : IPlayer<U, V, W, T>
+        where U : IState<V, T, W, U>
+        where V : IGameOptions<T, U, V, W>
+        where W : IMove<U, V, T, W>
     {
         int NumPlayers { get; }
+        List<T> Players { get; }
     }
 }

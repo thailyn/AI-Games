@@ -7,9 +7,15 @@ using TicTacToe.Engine.Interfaces;
 
 namespace TicTacToe.Engine
 {
-    public class TicTacToeOptions : IGameOptions
+    public class TicTacToeOptions : IGameOptions<TicTacToePlayer, TicTacToeState, TicTacToeOptions, TicTacToeMove>
     {
         public int NumPlayers
+        {
+            get;
+            protected set;
+        }
+
+        public List<TicTacToePlayer> Players
         {
             get;
             protected set;
@@ -36,6 +42,7 @@ namespace TicTacToe.Engine
         public TicTacToeOptions()
         {
             NumPlayers = 2;
+            Players = new List<TicTacToePlayer>();
 
             NumRows = 3;
             NumColumns = 3;

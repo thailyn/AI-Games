@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace TicTacToe.Engine.Interfaces
 {
     public interface IState<T, U, V, W>
-        where T : IGameOptions
+        where T : IGameOptions<U, W, T, V>
         where U : IPlayer<W, T, V, U>
         where V : IMove<W, T, U, V>
         where W : IState<T, U, V, W>

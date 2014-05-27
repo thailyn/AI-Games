@@ -7,13 +7,13 @@ using System.Threading.Tasks;
 namespace TicTacToe.Engine.Interfaces
 {
     public interface IGame<T, U, V, W>
-        where T : IGameOptions
+        where T : IGameOptions<V, U, T, W>
         where U : IState<T, V, W, U>
         where V : IPlayer<U, T, W, V>
         where W : IMove<U, T, V, W>
     {
         T Options { get; }
-        List<V> Players { get; }
+        //List<V> Players { get; }
 
         void Start();
         void Pause();

@@ -15,11 +15,13 @@ namespace TicTacToe.Engine
             protected set;
         }
 
+        /*
         public List<TicTacToePlayer> Players
         {
             get;
             protected set;
         }
+         * */
 
         public TicTacToeState CurrentState
         {
@@ -29,7 +31,7 @@ namespace TicTacToe.Engine
 
         protected TicTacToeGame()
         {
-            Players = new List<TicTacToePlayer>();
+            //Players = new List<TicTacToePlayer>();
         }
 
         public TicTacToeGame(TicTacToeOptions options)
@@ -41,12 +43,13 @@ namespace TicTacToe.Engine
 
         public void AddPlayer(TicTacToePlayer newPlayer)
         {
-            if (Players.Count >= Options.NumPlayers)
+            if (Options.Players.Count >= Options.NumPlayers)
             {
                 throw new InvalidOperationException("Already at the maximum number of players.");
             }
 
-            Players.Add(newPlayer);
+            //Players.Add(newPlayer);
+            Options.Players.Add(newPlayer);
         }
 
         public TicTacToeState GetState()
@@ -56,19 +59,19 @@ namespace TicTacToe.Engine
 
         public void Start()
         {
-            if (Players.Count != Options.NumPlayers)
+            if (Options.Players.Count != Options.NumPlayers)
             {
                 throw new InvalidOperationException("Can not start a new game until all players are entered.");
             }
 
             int currentPlayerIndex = 0;
-            TicTacToePlayer currentPlayer = Players[currentPlayerIndex];
+            TicTacToePlayer currentPlayer = Options.Players[currentPlayerIndex];
             TicTacToeMove lastMove = null;
             List<TicTacToeMove> newMoves = null;
             while (!CurrentState.IsEndState())
             {
                 newMoves = new List<TicTacToeMove> { lastMove };
-                foreach(var player in Players)
+                foreach(var player in Options.Players)
                 {
                     player.UpdateState(newMoves);
                 }
@@ -77,13 +80,13 @@ namespace TicTacToe.Engine
                 lastMove.PerformingPlayer = currentPlayer;
                 CurrentState = CurrentState.ApplyMove(currentPlayer, lastMove);
 
-                currentPlayerIndex = (currentPlayerIndex + 1) % Players.Count;
-                currentPlayer = Players[currentPlayerIndex];
+                currentPlayerIndex = (currentPlayerIndex + 1) % Options.Players.Count;
+                currentPlayer = Options.Players[currentPlayerIndex];
             }
 
             // notify players of end state
             newMoves = new List<TicTacToeMove> { lastMove };
-            foreach (var player in Players)
+            foreach (var player in Options.Players)
             {
                 player.UpdateState(newMoves);
             }

@@ -181,7 +181,6 @@ namespace TicTacToe.Engine
         }
 
         // TODO: Have this method clone the current state, instead of modifying it.
-        // TODO: Have this method determine who the player is in the next state.
         public TicTacToeState ApplyMove(TicTacToePlayer currentPlayer, TicTacToeMove newMove)
         {
             if (!(newMove is TicTacToeMove))
@@ -199,6 +198,7 @@ namespace TicTacToe.Engine
                 }
 
                 Board[newMoveIndex] = new Mark(currentPlayer.Symbol, currentPlayer);
+                CurrentPlayer = GetPlayerAfterMove(this, newMove);
             }
             else
             {
@@ -206,6 +206,23 @@ namespace TicTacToe.Engine
             }
 
             return this;
+        }
+
+        protected TicTacToePlayer GetPlayerAfterMove(TicTacToeState startingState, TicTacToeMove move)
+        {
+            if (move is PlaceMarkMove)
+            {
+                int currentPlayerIndex = startingState.Options.Players.IndexOf(startingState.CurrentPlayer);
+                if (currentPlayerIndex < 0)
+                    throw new InvalidOperationException("Invalid state.");
+
+                TicTacToePlayer nextPlayer = startingState.Options.Players[(currentPlayerIndex + 1)
+                    % startingState.Options.Players.Count];
+
+                return nextPlayer;
+            }
+
+            throw new NotImplementedException();
         }
     }
 }

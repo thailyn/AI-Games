@@ -8,7 +8,7 @@ namespace TicTacToe.Engine.Interfaces
 {
     public interface IPlayer<T, U, V, W>
         where T : IState<U, W, V, T>
-        where U : IGameOptions
+        where U : IGameOptions<W, T, U, V>
         where V : IMove<T, U, W, V>
         where W : IPlayer<T, U, V, W>
     {
