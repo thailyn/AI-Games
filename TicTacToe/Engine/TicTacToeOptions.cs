@@ -21,6 +21,12 @@ namespace TicTacToe.Engine
             protected set;
         }
 
+        public List<TicTacToePlayer> Observers
+        {
+            get;
+            protected set;
+        }
+
         public int NumRows
         {
             get;
@@ -43,6 +49,7 @@ namespace TicTacToe.Engine
         {
             NumPlayers = 2;
             Players = new List<TicTacToePlayer>();
+            Observers = new List<TicTacToePlayer>();
 
             NumRows = 3;
             NumColumns = 3;

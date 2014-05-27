@@ -14,5 +14,6 @@ namespace TicTacToe.Engine.Interfaces
     {
         int NumPlayers { get; }
         List<T> Players { get; }
+        List<T> Observers { get; }
     }
 }

@@ -43,6 +43,11 @@ namespace TicTacToe.Engine
             Options.Players.Add(newPlayer);
         }
 
+        public void AddObserver(TicTacToePlayer newObserver)
+        {
+            Options.Observers.Add(newObserver);
+        }
+
         public TicTacToeState GetState()
         {
             throw new NotImplementedException();
@@ -65,6 +70,11 @@ namespace TicTacToe.Engine
                 foreach(var player in Options.Players)
                 {
                     player.UpdateState(newMoves);
+                }
+
+                foreach(var observer in Options.Observers)
+                {
+                    observer.UpdateState(newMoves);
                 }
                 
                 lastMove = currentPlayer.GetMove();
