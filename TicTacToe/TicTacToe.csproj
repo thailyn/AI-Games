@@ -51,6 +51,7 @@
     <Compile Include="Engine\TicTacToeOptions.cs" />
     <Compile Include="Engine\TicTacToePlayer.cs" />
     <Compile Include="Engine\TicTacToeState.cs" />
+    <Compile Include="Game\BasicMinimaxPlayer.cs" />
     <Compile Include="Game\HumanConsolePlayer.cs" />
     <Compile Include="Game\Mark.cs" />
     <Compile Include="Game\PlaceMarkMove.cs" />
