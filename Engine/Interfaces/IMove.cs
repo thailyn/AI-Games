@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TicTacToe.Engine.Interfaces
+namespace Engine.Interfaces
 {
     public interface IMove<T, U, V, W>
         where T : IState<U, V, W, T>

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TicTacToe.Engine.Interfaces
+namespace Engine.Interfaces
 {
     public interface IGame<T, U, V, W>
         where T : IGameOptions<V, U, T, W>
