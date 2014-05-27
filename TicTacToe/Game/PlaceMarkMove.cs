@@ -24,7 +24,7 @@ namespace TicTacToe.Game
 
         protected PlaceMarkMove()
         {
-            Steps = new List<IMove>();
+            Steps = new List<TicTacToeMove>();
         }
 
         public PlaceMarkMove(int newMarkRow, int newMarkColumn)

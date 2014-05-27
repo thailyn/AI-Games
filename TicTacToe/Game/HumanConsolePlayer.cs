@@ -10,13 +10,6 @@ namespace TicTacToe.Game
 {
     public class HumanConsolePlayer : TicTacToePlayer
     {
-        public IState<IGameOptions> CurrentState
-        //public TicTacToeState CurrentState
-        {
-            get;
-            protected set;
-        }
-
         public HumanConsolePlayer(Symbol symbol, TicTacToeOptions options)
         {
             Symbol = symbol;
@@ -24,11 +17,11 @@ namespace TicTacToe.Game
 
             // The following line sets CurrentState to null, as the return value of the
             // TicTacToeState constructor is not an IState<IGameOptions> object.
-            CurrentState = new TicTacToeState(Options as TicTacToeOptions) as IState<IGameOptions>;
+            CurrentState = new TicTacToeState(Options);
         }
 
         //public void UpdateState<TicTacToeOptions>(TicTacToeState newState)
-        public override void UpdateState(List<IMove> moves)
+        public override void UpdateState(List<TicTacToeMove> moves)
         {
             foreach(var move in moves)
             {
@@ -37,11 +30,11 @@ namespace TicTacToe.Game
                     continue;
                 }
 
-                CurrentState = CurrentState.ApplyMove(move) as IState<IGameOptions>;
+                CurrentState = CurrentState.ApplyMove(move.PerformingPlayer, move);
             }
         }
 
-        public override IMove GetMove()
+        public override TicTacToeMove GetMove()
         {
             if (CurrentState == null)
             {
@@ -50,12 +43,11 @@ namespace TicTacToe.Game
             else
             {
                 Console.WriteLine("This is the current state:");
-                var currentState = CurrentState as TicTacToeState;
-                for (int i = 0; i < currentState.Options.NumRows; i++)
+                for (int i = 0; i < CurrentState.Options.NumRows; i++)
                 {
-                    for (int j = 0; j < currentState.Options.NumColumns; j++)
+                    for (int j = 0; j < CurrentState.Options.NumColumns; j++)
                     {
-                        Mark currentLocation = currentState.Board[i * currentState.Options.NumColumns + j];
+                        Mark currentLocation = CurrentState.Board[i * CurrentState.Options.NumColumns + j];
                         if (currentLocation.Symbol == Symbol.Blank)
                         {
                             System.Console.Write("  ");

@@ -7,7 +7,7 @@ using TicTacToe.Engine.Interfaces;
 
 namespace TicTacToe.Engine
 {
-    public class TicTacToeGame : IGame<TicTacToeOptions, TicTacToeState, TicTacToePlayer>
+    public class TicTacToeGame : IGame<TicTacToeOptions, TicTacToeState, TicTacToePlayer, TicTacToeMove>
     {
         public TicTacToeOptions Options
         {
@@ -61,23 +61,24 @@ namespace TicTacToe.Engine
                 throw new InvalidOperationException("Can not start a new game until all players are entered.");
             }
 
-            IPlayer currentPlayer = Players[0];
-            IMove lastMove = null;
-            List<IMove> newMoves = null;
+            TicTacToePlayer currentPlayer = Players[0];
+            TicTacToeMove lastMove = null;
+            List<TicTacToeMove> newMoves = null;
             while (!CurrentState.IsEndState())
             {
-                newMoves = new List<IMove> { lastMove };
+                newMoves = new List<TicTacToeMove> { lastMove };
                 foreach(var player in Players)
                 {
                     player.UpdateState(newMoves);
                 }
                 
                 lastMove = currentPlayer.GetMove();
-                CurrentState = CurrentState.ApplyMove(lastMove) as TicTacToeState;
+                lastMove.PerformingPlayer = currentPlayer;
+                CurrentState = CurrentState.ApplyMove(currentPlayer, lastMove);
             }
 
             // notify players of end state
-            newMoves = new List<IMove> { lastMove };
+            newMoves = new List<TicTacToeMove> { lastMove };
             foreach (var player in Players)
             {
                 player.UpdateState(newMoves);

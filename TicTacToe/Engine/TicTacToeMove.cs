@@ -7,15 +7,15 @@ using TicTacToe.Engine.Interfaces;
 
 namespace TicTacToe.Engine
 {
-    public abstract class TicTacToeMove : IMove
+    public abstract class TicTacToeMove : IMove<TicTacToeState, TicTacToeOptions, TicTacToePlayer, TicTacToeMove>
     {
-        public List<IMove> Steps
+        public List<TicTacToeMove> Steps
         {
             get;
             protected set;
         }
 
-        public IPlayer PerformingPlayer
+        public TicTacToePlayer PerformingPlayer
         {
             get;
             set;

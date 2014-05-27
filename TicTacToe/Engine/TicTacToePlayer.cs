@@ -8,7 +8,7 @@ using TicTacToe.Game;
 
 namespace TicTacToe.Engine
 {
-    public abstract class TicTacToePlayer : IPlayer
+    public abstract class TicTacToePlayer : IPlayer<TicTacToeState, TicTacToeOptions, TicTacToeMove, TicTacToePlayer>
     {
         public Symbol Symbol
         {
@@ -16,7 +16,13 @@ namespace TicTacToe.Engine
             protected set;
         }
 
-        public IGameOptions Options
+        public TicTacToeState CurrentState
+        {
+            get;
+            protected set;
+        }
+
+        public TicTacToeOptions Options
         {
             get;
             protected set;
@@ -26,8 +32,8 @@ namespace TicTacToe.Engine
         {
 
         }
-        public abstract void UpdateState(List<IMove> moves);
+        public abstract void UpdateState(List<TicTacToeMove> moves);
 
-        public abstract IMove GetMove();
+        public abstract TicTacToeMove GetMove();
     }
 }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TicTacToe.Engine;
 using TicTacToe.Engine.Interfaces;
 
 namespace TicTacToe.Game
@@ -22,13 +23,13 @@ namespace TicTacToe.Game
             protected set;
         }
 
-        public IPlayer Owner
+        public TicTacToePlayer Owner
         {
             get;
             protected set;
         }
 
-        public Mark(Symbol symbol, IPlayer owner = null)
+        public Mark(Symbol symbol, TicTacToePlayer owner = null)
         {
             Symbol = symbol;
             Owner = owner;

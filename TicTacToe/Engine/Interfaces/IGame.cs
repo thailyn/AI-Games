@@ -6,10 +6,11 @@ using System.Threading.Tasks;
 
 namespace TicTacToe.Engine.Interfaces
 {
-    public interface IGame<T, U, V>
+    public interface IGame<T, U, V, W>
         where T : IGameOptions
-        where U : IState<T>
-        where V : IPlayer
+        where U : IState<T, V, W, U>
+        where V : IPlayer<U, T, W, V>
+        where W : IMove<U, T, V, W>
     {
         T Options { get; }
         List<V> Players { get; }

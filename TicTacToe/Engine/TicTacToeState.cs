@@ -10,7 +10,7 @@ namespace TicTacToe.Engine
 {
     // TODO: Add Serializable features.
     [Serializable]
-    public class TicTacToeState : IState<TicTacToeOptions>
+    public class TicTacToeState : IState<TicTacToeOptions, TicTacToePlayer, TicTacToeMove, TicTacToeState>
     {
         public List<Mark> Board
         {
@@ -39,14 +39,14 @@ namespace TicTacToe.Engine
 
         public bool IsEndState()
         {
-            List<IPlayer> winningPlayers;
+            List<TicTacToePlayer> winningPlayers;
             return IsEndState(out winningPlayers);
         }
 
-        public bool IsEndState(out List<IPlayer> winningPlayers)
+        public bool IsEndState(out List<TicTacToePlayer> winningPlayers)
         {
-            winningPlayers = new List<IPlayer>();
-            IPlayer currentPlayer = null;
+            winningPlayers = new List<TicTacToePlayer>();
+            TicTacToePlayer currentPlayer = null;
             int currentStreak = 0;
 
             // First, check rows.
@@ -174,26 +174,23 @@ namespace TicTacToe.Engine
         }
 
         // TODO: Have this method clone the current state, instead of modifying it.
-        public IState<TicTacToeOptions> ApplyMove(IMove newMove)
+        public TicTacToeState ApplyMove(TicTacToePlayer currentPlayer, TicTacToeMove newMove)
         {
             if (!(newMove is TicTacToeMove))
             {
                 throw new InvalidOperationException();
             }
 
-            TicTacToeMove ticTacToeMove = newMove as TicTacToeMove;
-
-            if (ticTacToeMove.GetType() == typeof(PlaceMarkMove))
+            if (newMove.GetType() == typeof(PlaceMarkMove))
             {
-                PlaceMarkMove placeMarkMove = ticTacToeMove as PlaceMarkMove;
+                PlaceMarkMove placeMarkMove = newMove as PlaceMarkMove;
                 int newMoveIndex = placeMarkMove.NewMarkRow * Options.NumColumns + placeMarkMove.NewMarkColumn;
                 if (Board[newMoveIndex].Owner != null)
                 {
                     throw new InvalidOperationException("Can not place a mark on an already-owned location.");
                 }
 
-                var ticTacToePlayer = placeMarkMove.PerformingPlayer as TicTacToePlayer;
-                Board[newMoveIndex] = new Mark(ticTacToePlayer.Symbol, ticTacToePlayer);
+                Board[newMoveIndex] = new Mark(currentPlayer.Symbol, currentPlayer);
             }
             else
             {

@@ -6,9 +6,16 @@ using System.Threading.Tasks;
 
 namespace TicTacToe.Engine.Interfaces
 {
-    public interface IPlayer
+    public interface IPlayer<T, U, V, W>
+        where T : IState<U, W, V, T>
+        where U : IGameOptions
+        where V : IMove<T, U, W, V>
+        where W : IPlayer<T, U, V, W>
     {
-        void UpdateState(List<IMove> moves);
-        IMove GetMove();
+        U Options { get; }
+        T CurrentState { get; }
+
+        void UpdateState(List<V> moves);
+        V GetMove();
     }
 }
