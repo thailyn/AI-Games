@@ -173,7 +173,7 @@ namespace TicTacToe.Engine
             // Finally, check diagonals (other direction)
             for (int i = Options.NumColumns - 1; i >= 0; i--)
             {
-                Mark currentLocation = Board[(Options.NumRows - i - 1) * Options.NumColumns];
+                Mark currentLocation = Board[i * Options.NumColumns + (Options.NumColumns - i - 1)];
                 if (currentLocation.Owner == null)
                 {
                     currentPlayer = null;
