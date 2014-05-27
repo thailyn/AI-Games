@@ -202,13 +202,14 @@ namespace TicTacToe.Engine
         }
 
         // TODO: Have this method clone the current state, instead of modifying it.
-        public TicTacToeState ApplyMove(TicTacToePlayer currentPlayer, TicTacToeMove newMove)
+        public TicTacToeState ApplyMove(TicTacToeMove newMove)
         {
             if (!(newMove is TicTacToeMove))
             {
                 throw new InvalidOperationException();
             }
 
+            TicTacToeState nextMove;
             if (newMove.GetType() == typeof(PlaceMarkMove))
             {
                 PlaceMarkMove placeMarkMove = newMove as PlaceMarkMove;
@@ -218,15 +219,18 @@ namespace TicTacToe.Engine
                     throw new InvalidOperationException("Can not place a mark on an already-owned location.");
                 }
 
-                Board[newMoveIndex] = new Mark(currentPlayer.Symbol, currentPlayer);
-                CurrentPlayer = GetPlayerAfterMove(this, newMove);
+                nextMove = this.Copy();
+
+                var nextPlayer = GetPlayerAfterMove(nextMove, newMove);
+                nextMove.Board[newMoveIndex] = new Mark(CurrentPlayer.Symbol, CurrentPlayer);
+                nextMove.CurrentPlayer = nextPlayer;
             }
             else
             {
                 throw new NotImplementedException();
             }
 
-            return this;
+            return nextMove;
         }
 
         protected TicTacToePlayer GetPlayerAfterMove(TicTacToeState startingState, TicTacToeMove move)
@@ -244,6 +248,20 @@ namespace TicTacToe.Engine
             }
 
             throw new NotImplementedException();
+        }
+
+        public TicTacToeState Copy()
+        {
+            TicTacToeState copy = new TicTacToeState(Options);
+            copy.Board = new List<Mark>();
+            for (int i = 0; i < Board.Count; i++)
+            {
+                copy.Board.Add(Board[i]);
+            }
+
+            copy.CurrentPlayer = CurrentPlayer;
+
+            return copy;
         }
     }
 }

@@ -18,6 +18,8 @@ namespace TicTacToe.Engine.Interfaces
         bool IsEndState(out List<U> winningPlayers);
         //IPlayer GetWinningPlayer();
 
-        W ApplyMove(U currentPlayer, V newMove);
+        W ApplyMove(V newMove);
+
+        W Copy();
     }
 }

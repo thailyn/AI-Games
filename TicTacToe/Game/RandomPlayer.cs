@@ -26,7 +26,7 @@ namespace TicTacToe.Game
                     continue;
                 }
 
-                CurrentState = CurrentState.ApplyMove(move.PerformingPlayer, move);
+                CurrentState = CurrentState.ApplyMove(move);
             }
         }
 

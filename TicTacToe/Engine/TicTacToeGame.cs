@@ -15,14 +15,6 @@ namespace TicTacToe.Engine
             protected set;
         }
 
-        /*
-        public List<TicTacToePlayer> Players
-        {
-            get;
-            protected set;
-        }
-         * */
-
         public TicTacToeState CurrentState
         {
             get;
@@ -31,7 +23,6 @@ namespace TicTacToe.Engine
 
         protected TicTacToeGame()
         {
-            //Players = new List<TicTacToePlayer>();
         }
 
         public TicTacToeGame(TicTacToeOptions options)
@@ -78,7 +69,7 @@ namespace TicTacToe.Engine
                 
                 lastMove = currentPlayer.GetMove();
                 lastMove.PerformingPlayer = currentPlayer;
-                CurrentState = CurrentState.ApplyMove(currentPlayer, lastMove);
+                CurrentState = CurrentState.ApplyMove(lastMove);
 
                 currentPlayerIndex = (currentPlayerIndex + 1) % Options.Players.Count;
                 currentPlayer = Options.Players[currentPlayerIndex];
