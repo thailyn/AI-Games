@@ -19,7 +19,7 @@ namespace TicTacToe
             options.NumToWin = 3;
 
             var playerOne = new HumanConsolePlayer(Symbol.X, options);
-            var playerTwo = new HumanConsolePlayer(Symbol.O, options);
+            var playerTwo = new BasicMinimaxPlayer(Symbol.O, options);
 
             var game = new TicTacToeGame(options);
             game.AddPlayer(playerOne);
