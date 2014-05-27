@@ -75,29 +75,5 @@ namespace TicTacToe.Game
 
             return new TicTacToe.Game.PlaceMarkMove(newMarkRow, newMarkColumn);
         }
-
-        protected void PrintState(TicTacToeState currentState)
-        {
-            for (int i = 0; i < currentState.Options.NumRows; i++)
-            {
-                for (int j = 0; j < currentState.Options.NumColumns; j++)
-                {
-                    Mark currentLocation = currentState.Board[i * currentState.Options.NumColumns + j];
-                    if (currentLocation.Symbol == Symbol.Blank)
-                    {
-                        System.Console.Write("  ");
-                    }
-                    else if (currentLocation.Symbol == Symbol.X)
-                    {
-                        System.Console.Write("X ");
-                    }
-                    else
-                    {
-                        System.Console.Write("O ");
-                    }
-                }
-                System.Console.WriteLine();
-            }
-        }
     }
 }
