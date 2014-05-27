@@ -8,7 +8,7 @@ using TicTacToe.Engine.Interfaces;
 
 namespace TicTacToe.Game
 {
-    public class ConsoleHumanAgent : IAgent
+    public class HumanConsolePlayer : TicTacToePlayer
     {
         public IState<IGameOptions> CurrentState
         //public TicTacToeState CurrentState
@@ -17,14 +17,9 @@ namespace TicTacToe.Game
             protected set;
         }
 
-        public IGameOptions Options
+        public HumanConsolePlayer(Symbol symbol, TicTacToeOptions options)
         {
-            get;
-            protected set;
-        }
-
-        public ConsoleHumanAgent(TicTacToeOptions options)
-        {
+            Symbol = symbol;
             Options = options;
 
             // The following line sets CurrentState to null, as the return value of the
@@ -33,7 +28,7 @@ namespace TicTacToe.Game
         }
 
         //public void UpdateState<TicTacToeOptions>(TicTacToeState newState)
-        public void UpdateState(List<IMove> moves)
+        public override void UpdateState(List<IMove> moves)
         {
             foreach(var move in moves)
             {
@@ -46,7 +41,7 @@ namespace TicTacToe.Game
             }
         }
 
-        public IMove GetMove()
+        public override IMove GetMove()
         {
             if (CurrentState == null)
             {

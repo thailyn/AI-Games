@@ -41,7 +41,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Engine\Interfaces\IAgent.cs" />
     <Compile Include="Engine\Interfaces\IGame.cs" />
     <Compile Include="Engine\Interfaces\IGameOptions.cs" />
     <Compile Include="Engine\Interfaces\IMove.cs" />
@@ -52,7 +51,7 @@
     <Compile Include="Engine\TicTacToeOptions.cs" />
     <Compile Include="Engine\TicTacToePlayer.cs" />
     <Compile Include="Engine\TicTacToeState.cs" />
-    <Compile Include="Game\ConsoleHumanAgent.cs" />
+    <Compile Include="Game\HumanConsolePlayer.cs" />
     <Compile Include="Game\Mark.cs" />
     <Compile Include="Game\PlaceMarkMove.cs" />
     <Compile Include="Program.cs" />

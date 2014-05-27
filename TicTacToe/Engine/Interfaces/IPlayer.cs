@@ -8,8 +8,6 @@ namespace TicTacToe.Engine.Interfaces
 {
     public interface IPlayer
     {
-        void SetAgent(IAgent agent);
-
         void UpdateState(List<IMove> moves);
         IMove GetMove();
     }

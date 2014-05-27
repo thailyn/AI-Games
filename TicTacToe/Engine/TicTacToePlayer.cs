@@ -8,41 +8,26 @@ using TicTacToe.Game;
 
 namespace TicTacToe.Engine
 {
-    public class TicTacToePlayer : IPlayer
+    public abstract class TicTacToePlayer : IPlayer
     {
-        public IAgent Agent
-        {
-            get;
-            protected set;
-        }
-
         public Symbol Symbol
         {
             get;
             protected set;
         }
 
-        public TicTacToePlayer(Symbol symbol)
+        public IGameOptions Options
         {
-            Symbol = symbol;
+            get;
+            protected set;
         }
 
-        public void UpdateState(List<IMove> moves)
+        protected TicTacToePlayer()
         {
-            Agent.UpdateState(moves);
-        }
 
-        public IMove GetMove()
-        {
-            
-            IMove move = Agent.GetMove();
-            move.PerformingPlayer = this;
-            return move;
         }
+        public abstract void UpdateState(List<IMove> moves);
 
-        public void SetAgent(IAgent newAgent)
-        {
-            Agent = newAgent;
-        }
+        public abstract IMove GetMove();
     }
 }

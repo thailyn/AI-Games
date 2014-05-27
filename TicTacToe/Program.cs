@@ -18,14 +18,8 @@ namespace TicTacToe
             options.NumColumns = 3;
             options.NumToWin = 3;
 
-            var playerOneAgent = new ConsoleHumanAgent(options);
-            var playerTwoAgent = new ConsoleHumanAgent(options);
-
-            var playerOne = new TicTacToePlayer(Symbol.X);
-            playerOne.SetAgent(playerOneAgent);
-
-            var playerTwo = new TicTacToePlayer(Symbol.O);
-            playerTwo.SetAgent(playerTwoAgent);
+            var playerOne = new HumanConsolePlayer(Symbol.X, options);
+            var playerTwo = new HumanConsolePlayer(Symbol.O, options);
 
             var game = new TicTacToeGame(options);
             game.AddPlayer(playerOne);
