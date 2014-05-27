@@ -78,6 +78,7 @@ namespace TicTacToe.Engine
             // First, check rows.
             for (int i = 0; i < Options.NumRows; i++)
             {
+                currentPlayer = null;
                 for(int j = 0; j < Options.NumColumns; j++)
                 {
                     Mark currentLocation = Board[i * Options.NumColumns + j];
@@ -108,6 +109,7 @@ namespace TicTacToe.Engine
             // Next, check columns.
             for (int i = 0; i < Options.NumColumns; i++)
             {
+                currentPlayer = null;
                 for (int j = 0; j < Options.NumRows; j++)
                 {
                     Mark currentLocation = Board[j * Options.NumColumns + i];
