@@ -28,7 +28,26 @@ namespace TicTacToe.Game
                     continue;
                 }
 
-                CurrentState = CurrentState.ApplyMove(move.PerformingPlayer, move);
+                CurrentState = CurrentState.ApplyMove(move);
+            }
+
+            List<TicTacToePlayer> winningPlayers;
+            if (CurrentState.IsEndState(out winningPlayers))
+            {
+                if (winningPlayers.Count == 0 || winningPlayers.Count > 1)
+                {
+                    Console.WriteLine("The game is over.  It was a draw.");
+                }
+                else if (winningPlayers[0] == this)
+                {
+                    Console.WriteLine("You won!");
+                }
+                else
+                {
+                    Console.WriteLine("You lost.");
+                }
+
+                PrintState(CurrentState);
             }
         }
 
@@ -41,26 +60,8 @@ namespace TicTacToe.Game
             else
             {
                 Console.WriteLine("This is the current state:");
-                for (int i = 0; i < CurrentState.Options.NumRows; i++)
-                {
-                    for (int j = 0; j < CurrentState.Options.NumColumns; j++)
-                    {
-                        Mark currentLocation = CurrentState.Board[i * CurrentState.Options.NumColumns + j];
-                        if (currentLocation.Symbol == Symbol.Blank)
-                        {
-                            System.Console.Write("  ");
-                        }
-                        else if (currentLocation.Symbol == Symbol.X)
-                        {
-                            System.Console.Write("X ");
-                        }
-                        else
-                        {
-                            System.Console.Write("O ");
-                        }
-                    }
-                    System.Console.WriteLine();
-                }
+                PrintState(CurrentState);
+
                 System.Console.WriteLine();
             }
 
@@ -73,6 +74,30 @@ namespace TicTacToe.Game
             // TODO: Error checking and making sure the entered mark is both valid and unoccupied.
 
             return new TicTacToe.Game.PlaceMarkMove(newMarkRow, newMarkColumn);
+        }
+
+        protected void PrintState(TicTacToeState currentState)
+        {
+            for (int i = 0; i < currentState.Options.NumRows; i++)
+            {
+                for (int j = 0; j < currentState.Options.NumColumns; j++)
+                {
+                    Mark currentLocation = currentState.Board[i * currentState.Options.NumColumns + j];
+                    if (currentLocation.Symbol == Symbol.Blank)
+                    {
+                        System.Console.Write("  ");
+                    }
+                    else if (currentLocation.Symbol == Symbol.X)
+                    {
+                        System.Console.Write("X ");
+                    }
+                    else
+                    {
+                        System.Console.Write("O ");
+                    }
+                }
+                System.Console.WriteLine();
+            }
         }
     }
 }
