@@ -14,6 +14,7 @@ namespace TicTacToe.Engine.Interfaces
     {
         T Options { get; }
         U CurrentPlayer { get; }
+        W PreviousState { get; }
 
         bool IsEndState(out List<U> winningPlayers);
         //IPlayer GetWinningPlayer();

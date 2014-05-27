@@ -24,6 +24,12 @@ namespace TicTacToe.Engine
             protected set;
         }
 
+        public TicTacToeState PreviousState
+        {
+            get;
+            protected set;
+        }
+
         private TicTacToePlayer _currentPlayer;
         public TicTacToePlayer CurrentPlayer
         {
@@ -220,6 +226,7 @@ namespace TicTacToe.Engine
                 }
 
                 nextMove = this.Copy();
+                nextMove.PreviousState = this;
 
                 var nextPlayer = GetPlayerAfterMove(nextMove, newMove);
                 nextMove.Board[newMoveIndex] = new Mark(CurrentPlayer.Symbol, CurrentPlayer);
@@ -260,6 +267,7 @@ namespace TicTacToe.Engine
             }
 
             copy.CurrentPlayer = CurrentPlayer;
+            copy.PreviousState = PreviousState;
 
             return copy;
         }
