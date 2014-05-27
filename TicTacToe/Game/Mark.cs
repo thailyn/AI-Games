@@ -39,5 +39,10 @@ namespace TicTacToe.Game
         {
             return Symbol == Game.Symbol.Blank;
         }
+
+        public override string ToString()
+        {
+            return Symbol.ToString();
+        }
     }
 }

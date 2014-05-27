@@ -41,5 +41,11 @@ namespace TicTacToe.Game
             NewMarkColumn = newMarkColumn;
             PerformingPlayer = performingPlayer;
         }
+
+        public override string ToString()
+        {
+            return string.Format("{0}, {1}: {2}", NewMarkRow, NewMarkColumn,
+                PerformingPlayer == null ? "????" : PerformingPlayer.Symbol.ToString());
+        }
     }
 }
