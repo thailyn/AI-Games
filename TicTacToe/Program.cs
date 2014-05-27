@@ -26,6 +26,9 @@ namespace TicTacToe
             game.AddPlayer(playerTwo);
 
             game.Start();
+
+            System.Console.WriteLine("Game is finished.");
+            System.Console.ReadLine();
         }
     }
 }
