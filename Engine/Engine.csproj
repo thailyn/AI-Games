@@ -39,6 +39,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Algorithms\BasicMinimaxSearch.cs" />
     <Compile Include="Interfaces\IGame.cs" />
     <Compile Include="Interfaces\IGameOptions.cs" />
     <Compile Include="Interfaces\IMove.cs" />
