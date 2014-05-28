@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TicTacToe", "TicTacToe\TicT
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Engine", "Engine\Engine.csproj", "{363A99C6-D2D2-48AB-AC30-5EB92F08FEFC}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Checkers", "Checkers\Checkers.csproj", "{084AF1CE-8B31-4959-8C92-61C4851C7F50}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{363A99C6-D2D2-48AB-AC30-5EB92F08FEFC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{363A99C6-D2D2-48AB-AC30-5EB92F08FEFC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{363A99C6-D2D2-48AB-AC30-5EB92F08FEFC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{084AF1CE-8B31-4959-8C92-61C4851C7F50}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{084AF1CE-8B31-4959-8C92-61C4851C7F50}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{084AF1CE-8B31-4959-8C92-61C4851C7F50}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{084AF1CE-8B31-4959-8C92-61C4851C7F50}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
