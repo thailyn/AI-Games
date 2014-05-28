@@ -18,12 +18,15 @@ namespace TicTacToe
             options.NumColumns = 3;
             options.NumToWin = 3;
 
-            var playerOne = new HumanConsolePlayer(Symbol.X, options);
+            var playerOne = new BasicMinimaxPlayer(Symbol.X, options);
             var playerTwo = new BasicMinimaxPlayer(Symbol.O, options);
+
+            var consoleObserver = new ConsoleObserver(options);
 
             var game = new TicTacToeGame(options);
             game.AddPlayer(playerOne);
             game.AddPlayer(playerTwo);
+            game.AddObserver(consoleObserver);
 
             game.Start();
 
