@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using Engine.Interfaces;
 using TicTacToe.Game;
 
-namespace TicTacToe.Engine
+namespace TicTacToe.Core
 {
     public abstract class TicTacToePlayer : IPlayer<TicTacToeState, TicTacToeOptions, TicTacToeMove, TicTacToePlayer>
     {

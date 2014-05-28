@@ -41,11 +41,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Engine\TicTacToeGame.cs" />
-    <Compile Include="Engine\TicTacToeMove.cs" />
-    <Compile Include="Engine\TicTacToeOptions.cs" />
-    <Compile Include="Engine\TicTacToePlayer.cs" />
-    <Compile Include="Engine\TicTacToeState.cs" />
+    <Compile Include="Core\TicTacToeGame.cs" />
+    <Compile Include="Core\TicTacToeMove.cs" />
+    <Compile Include="Core\TicTacToeOptions.cs" />
+    <Compile Include="Core\TicTacToePlayer.cs" />
+    <Compile Include="Core\TicTacToeState.cs" />
     <Compile Include="Game\BasicMinimaxPlayer.cs" />
     <Compile Include="Game\ConsoleObserver.cs" />
     <Compile Include="Game\HumanConsolePlayer.cs" />

@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Engine.Interfaces;
 
-namespace TicTacToe.Engine
+namespace TicTacToe.Core
 {
     public class TicTacToeGame : IGame<TicTacToeOptions, TicTacToeState, TicTacToePlayer, TicTacToeMove>
     {

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using TicTacToe.Engine;
+using TicTacToe.Core;
 using Engine.Interfaces;
 
 namespace TicTacToe.Game
