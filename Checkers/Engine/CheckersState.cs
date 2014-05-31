@@ -30,6 +30,12 @@ namespace Checkers.Engine
             protected set;
         }
 
+        public List<CheckersMove> MovesThisTurn
+        {
+            get;
+            protected set;
+        }
+
         private CheckersPlayer _currentPlayer;
         public CheckersPlayer CurrentPlayer
         {
@@ -54,6 +60,7 @@ namespace Checkers.Engine
         public CheckersState(CheckersOptions options)
         {
             Board = new List<Location>();
+            MovesThisTurn = new List<CheckersMove>();
             Options = options;
             for (int i = 0; i < Options.NumRows; i++)
             {
@@ -147,9 +154,37 @@ namespace Checkers.Engine
             }
 
             // See if the current player has any moves to make.
-            List<CheckersMove> availableMoves = new List<CheckersMove>();
+            foreach (var move in GetAvailableMoves(this))
+            {
+                return false;
+            }
+
+            winningPlayers.Add(otherPlayer);
+            return true;
+        }
+
+        protected IEnumerable<CheckersMove> GetAvailableMoves(CheckersState state)
+        {
+            CheckersMove previousMoveThisTurn = null;
+            if (state.MovesThisTurn.Count > 0)
+            {
+                // If the current player already slid a piece, he can not do anything else.
+                previousMoveThisTurn = state.MovesThisTurn[state.MovesThisTurn.Count - 1];
+                if (previousMoveThisTurn is SlidePieceMove)
+                {
+                    yield return new EndTurnMove(state.CurrentPlayer);
+                    yield break;
+                }
+
+                // If the player just jumped, he can always choose to end his turn.
+                if (previousMoveThisTurn is JumpPieceMove)
+                {
+                    yield return new EndTurnMove(state.CurrentPlayer);
+                }
+            }
+
             int forwardDirection = 0;
-            if (CurrentPlayer.Team == Team.Red)
+            if (state.CurrentPlayer.Team == Team.Red)
             {
                 // Red goes down.
                 forwardDirection = 1;
@@ -160,29 +195,18 @@ namespace Checkers.Engine
                 forwardDirection = -1;
             }
 
-            bool foundMove = false;
-            foreach (var location in currentPlayerLocations)
+            foreach (var location in state.Board)
             {
+                if (location.IsUnoccupied() || location.Piece.Owner != state.CurrentPlayer)
+                {
+                    continue;
+                }
+
                 foreach (var move in GetAvailableMovesForPiece(this, location, forwardDirection, false))
                 {
-                    availableMoves.Add(move);
-                    foundMove = true;
-                    break;
-                }
-
-                if (foundMove)
-                {
-                    break;
+                    yield return move;
                 }
             }
-
-            if (availableMoves.Count == 0)
-            {
-                winningPlayers.Add(otherPlayer);
-                return true;
-            }
-
-            return false;
         }
 
         protected IEnumerable<CheckersMove> GetAvailableMovesForPiece(CheckersState state, Location location,
