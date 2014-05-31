@@ -1,4 +1,5 @@
 ﻿using Checkers.Game;
+using Checkers.Game.Moves;
 using Engine.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -108,7 +109,172 @@ namespace Checkers.Engine
 
         public bool IsEndState(out List<CheckersPlayer> winningPlayers)
         {
-            throw new NotImplementedException();
+            winningPlayers = new List<CheckersPlayer>();
+            List<Location> currentPlayerLocations = new List<Location>();
+            List<Location> otherPlayerLocations = new List<Location>();
+            CheckersPlayer otherPlayer = null;
+
+            // Find each players' pieces and determine if one player is
+            // out of pieces.
+            foreach (var location in Board)
+            {
+                if (location.IsUnoccupied())
+                {
+                    continue;
+                }
+
+                if (location.Piece.Owner == CurrentPlayer)
+                {
+                    currentPlayerLocations.Add(location);
+                }
+                else
+                {
+                    otherPlayerLocations.Add(location);
+                    otherPlayer = otherPlayer ?? location.Piece.Owner;
+                }
+            }
+
+            if (currentPlayerLocations.Count == 0)
+            {
+                winningPlayers.Add(otherPlayer);
+                return true;
+            }
+
+            if (otherPlayerLocations.Count == 0)
+            {
+                winningPlayers.Add(CurrentPlayer);
+                return true;
+            }
+
+            // See if the current player has any moves to make.
+            List<CheckersMove> availableMoves = new List<CheckersMove>();
+            int forwardDirection = 0;
+            if (CurrentPlayer.Team == Team.Red)
+            {
+                // Red goes down.
+                forwardDirection = 1;
+            }
+            else
+            {
+                // Black goes up.
+                forwardDirection = -1;
+            }
+
+            bool foundMove = false;
+            foreach (var location in currentPlayerLocations)
+            {
+                foreach (var move in GetAvailableMovesForPiece(this, location, forwardDirection, false))
+                {
+                    availableMoves.Add(move);
+                    foundMove = true;
+                    break;
+                }
+
+                if (foundMove)
+                {
+                    break;
+                }
+            }
+
+            if (availableMoves.Count == 0)
+            {
+                winningPlayers.Add(otherPlayer);
+                return true;
+            }
+
+            return false;
+        }
+
+        protected IEnumerable<CheckersMove> GetAvailableMovesForPiece(CheckersState state, Location location,
+            int forwardDirection, bool onlyCanCapture)
+        {
+            CheckersPlayer currentPlayer = state.CurrentPlayer;
+            Piece piece = location.Piece;
+
+            #region Down left
+            if (forwardDirection == 1 || piece.IsKing)
+            {
+                foreach (var move in GetAvailableMovesForPieceInDirection(state, location, forwardDirection,
+                    +1, -1, onlyCanCapture))
+                {
+                    yield return move;
+                }
+            }
+            #endregion
+
+            #region Down right
+            if (forwardDirection == 1 || piece.IsKing)
+            {
+                foreach (var move in GetAvailableMovesForPieceInDirection(state, location, forwardDirection,
+                    +1, +1, onlyCanCapture))
+                {
+                    yield return move;
+                }
+            }
+            #endregion
+
+            #region Up left
+            if (forwardDirection == -1 || piece.IsKing)
+            {
+                foreach (var move in GetAvailableMovesForPieceInDirection(state, location, forwardDirection,
+                    -1, -1, onlyCanCapture))
+                {
+                    yield return move;
+                }
+            }
+            #endregion
+
+            #region Up right
+            if (forwardDirection == -1 || piece.IsKing)
+            {
+                foreach (var move in GetAvailableMovesForPieceInDirection(state, location, forwardDirection,
+                    -1, +1, onlyCanCapture))
+                {
+                    yield return move;
+                }
+            }
+            #endregion
+        }
+
+        public IEnumerable<CheckersMove> GetAvailableMovesForPieceInDirection(CheckersState state, Location location,
+            int forwardDirection, int rowDirection, int columnDirection, bool onlyCanCapture)
+        {
+            CheckersPlayer currentPlayer = state.CurrentPlayer;
+
+            int newRow = location.Row + rowDirection;
+            int newColumn = location.Column + columnDirection;
+            int newIndex = newRow * state.Options.NumColumns + newColumn;
+
+            if (newRow >= 0 && newRow < state.Options.NumRows && newColumn >= 0 && newColumn < state.Options.NumColumns
+                && !onlyCanCapture)
+            {
+                if (state.Board[newIndex].IsUnoccupied())
+                {
+                    yield return new SlidePieceMove(location.Row, location.Column, newRow, newColumn, location.Piece);
+                }
+            }
+
+            int jumpNewRow = newRow + rowDirection;
+            int jumpNewColumn = newColumn + columnDirection;
+            int jumpNewIndex = jumpNewRow * state.Options.NumColumns + jumpNewColumn;
+
+            if (jumpNewRow >= 0 && jumpNewRow < state.Options.NumRows && jumpNewColumn >= 0 && jumpNewColumn < state.Options.NumColumns)
+            {
+                if (!state.Board[newIndex].IsUnoccupied() && state.Board[newIndex].Piece.Owner != currentPlayer
+                    && !state.Board[newIndex].Piece.IsJumped && state.Board[jumpNewIndex].IsUnoccupied())
+                {
+                    CheckersMove jumpPieceMove = new JumpPieceMove(location.Row, location.Column, newRow, newColumn,
+                        location.Piece, state.Board[newIndex].Piece);
+                    yield return jumpPieceMove;
+
+                    var newState = state.ApplyMove(jumpPieceMove);
+                    foreach (var move in GetAvailableMovesForPiece(newState,
+                        newState.Board[newIndex], forwardDirection, true))
+                    {
+                        yield return move;
+                    }
+                }
+            }
         }
 
         // TODO: Have this method clone the current state, instead of modifying it.

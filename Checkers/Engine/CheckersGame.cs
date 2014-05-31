@@ -74,7 +74,42 @@ namespace Checkers.Engine
                 throw new InvalidOperationException("Can not start a new game until all players are entered.");
             }
 
-            throw new NotImplementedException();
+            int currentPlayerIndex = 0;
+            CheckersPlayer currentPlayer = Options.Players[currentPlayerIndex];
+            CheckersMove lastMove = null;
+            List<CheckersMove> newMoves = null;
+            while (!CurrentState.IsEndState())
+            {
+                newMoves = new List<CheckersMove> { lastMove };
+                foreach(var player in Options.Players)
+                {
+                    player.UpdateState(newMoves);
+                }
+
+                foreach (var observer in Options.Observers)
+                {
+                    observer.UpdateState(newMoves);
+                }
+
+                lastMove = currentPlayer.GetMove();
+                lastMove.PerformingPlayer = currentPlayer;
+                CurrentState = CurrentState.ApplyMove(lastMove);
+
+                currentPlayerIndex = (currentPlayerIndex + 1) % Options.Players.Count;
+                currentPlayer = Options.Players[currentPlayerIndex];
+            }
+
+            // notify players of end state
+            newMoves = new List<CheckersMove> { lastMove };
+            foreach (var player in Options.Players)
+            {
+                player.UpdateState(newMoves);
+            }
+
+            foreach (var observer in Options.Observers)
+            {
+                observer.UpdateState(newMoves);
+            }
         }
 
         public void Pause()

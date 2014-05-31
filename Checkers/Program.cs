@@ -23,7 +23,7 @@ namespace Checkers
 
             playerOne.PrintCurrentState();
 
-            //game.Start();
+            game.Start();
 
             System.Console.WriteLine("Game is finished.");
             System.Console.ReadLine();

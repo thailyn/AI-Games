@@ -48,6 +48,9 @@
     <Compile Include="Engine\CheckersState.cs" />
     <Compile Include="Game\HumanConsolePlayer.cs" />
     <Compile Include="Game\Location.cs" />
+    <Compile Include="Game\Moves\EndTurnMove.cs" />
+    <Compile Include="Game\Moves\JumpPieceMove.cs" />
+    <Compile Include="Game\Moves\SlidePieceMove.cs" />
     <Compile Include="Game\Piece.cs" />
     <Compile Include="Game\Team.cs" />
     <Compile Include="Program.cs" />
@@ -62,6 +65,7 @@
       <Name>Engine</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

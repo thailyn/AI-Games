@@ -21,16 +21,26 @@ namespace Checkers.Game
             protected set;
         }
 
+        public bool IsJumped
+        {
+            get;
+            protected set;
+        }
+
         public CheckersPlayer Owner
         {
             get;
             protected set;
         }
 
-        public Piece(Team team, CheckersPlayer owner = null)
+        public Piece(Team team, CheckersPlayer owner = null, bool isKing = false,
+            bool isJumped = false)
         {
             Team = team;
             Owner = owner;
+
+            IsKing = isKing;
+            IsJumped = isJumped;
         }
 
         // TODO: Return a meaningful value here!
