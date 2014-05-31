@@ -322,7 +322,42 @@ namespace Checkers.Engine
         // TODO: Have this method clone the current state, instead of modifying it.
         public CheckersState ApplyMove(CheckersMove newMove)
         {
-            throw new NotImplementedException();
+            CheckersState nextState = null;
+
+            if (newMove.GetType() == typeof(MakeKingMove))
+            {
+                MakeKingMove makeKingMove = newMove as MakeKingMove;
+                int locationIndex = makeKingMove.Location.Row * Options.NumColumns + makeKingMove.Location.Column;
+                if (Board[locationIndex].IsUnoccupied() || Board[locationIndex].Piece.Owner != CurrentPlayer
+                    || Board[locationIndex].Piece.IsKing)
+                {
+                    throw new InvalidOperationException("Can not make a kind at the requested location.");
+                }
+
+                nextState = this.Copy();
+                nextState.PreviousState = this;
+                nextState.MovesThisTurn.Add(newMove);
+
+                nextState.Board[locationIndex].Piece.MakeKing();
+            }
+            else if (newMove.GetType() == typeof(SlidePieceMove))
+            {
+                throw new NotImplementedException();
+            }
+            else if (newMove.GetType() == typeof(JumpPieceMove))
+            {
+                throw new NotImplementedException();
+            }
+            else if (newMove.GetType() == typeof(EndTurnMove))
+            {
+                throw new NotImplementedException();
+            }
+            else
+            {
+                throw new InvalidOperationException();
+            }
+
+            return nextState;
         }
 
         protected CheckersPlayer GetPlayerAfterMove(CheckersState startingState, CheckersMove move)
