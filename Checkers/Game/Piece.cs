@@ -43,6 +43,16 @@ namespace Checkers.Game
             IsJumped = isJumped;
         }
 
+        public void MakeKing()
+        {
+            if (IsKing)
+            {
+                throw new InvalidOperationException();
+            }
+
+            IsKing = true;
+        }
+
         // TODO: Return a meaningful value here!
         public override string ToString()
         {

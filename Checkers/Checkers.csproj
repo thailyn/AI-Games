@@ -50,6 +50,7 @@
     <Compile Include="Game\Location.cs" />
     <Compile Include="Game\Moves\EndTurnMove.cs" />
     <Compile Include="Game\Moves\JumpPieceMove.cs" />
+    <Compile Include="Game\Moves\MakeKingMove.cs" />
     <Compile Include="Game\Moves\SlidePieceMove.cs" />
     <Compile Include="Game\Piece.cs" />
     <Compile Include="Game\Team.cs" />
