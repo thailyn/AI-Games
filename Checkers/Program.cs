@@ -1,5 +1,6 @@
 ﻿using Checkers.Engine;
 using Checkers.Game;
+using Checkers.Game.Players;
 using System;
 using System.Collections.Generic;
 using System.Linq;

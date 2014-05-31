@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Checkers.Game
+namespace Checkers.Game.Players
 {
     public class HumanConsolePlayer : CheckersPlayer
     {
