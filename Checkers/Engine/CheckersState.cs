@@ -328,6 +328,87 @@ namespace Checkers.Engine
             return null;
         }
 
+        protected bool IsMoveLegal(CheckersState state, MakeKingMove move)
+        {
+            int locationIndex = move.Location.Row * state.Options.NumColumns + move.Location.Column;
+
+            if (state.Board[locationIndex].IsUnoccupied() || state.Board[locationIndex].Piece.Owner != CurrentPlayer
+                    || state.Board[locationIndex].Piece.IsKing)
+            {
+                return false;
+            }
+
+            return true;
+        }
+
+        protected bool IsMoveLegal(CheckersState state, SlidePieceMove move)
+        {
+            int startLocationIndex = move.StartRow * state.Options.NumColumns + move.StartColumn;
+            int endLocationIndex = move.EndRow * state.Options.NumColumns + move.EndColumn;
+
+            if (state.Board[startLocationIndex].IsUnoccupied() || state.Board[startLocationIndex].Piece.Owner != CurrentPlayer
+                || !state.Board[endLocationIndex].IsUnoccupied())
+            {
+                return false;
+            }
+
+            if (!state.Board[startLocationIndex].Piece.IsKing)
+            {
+                int forwardDirection = 0;
+                if (state.CurrentPlayer.Team == Team.Red)
+                {
+                    forwardDirection = +1;
+                }
+                else if (state.CurrentPlayer.Team == Team.Black)
+                {
+                    forwardDirection = -1;
+                }
+
+                if (!(move.EndRow - move.StartRow == forwardDirection))
+                {
+                    return false;
+                }
+            }
+
+            return true;
+        }
+
+        protected bool IsMoveLegal(CheckersState state, JumpPieceMove move)
+        {
+            int jumpedPieceRow = move.StartRow + (move.EndRow - move.StartRow) / 2;
+            int jumpedPieceColumn = move.StartColumn + (move.EndColumn - move.StartColumn) / 2;
+            int jumpedPieceIndex = jumpedPieceRow * state.Options.NumColumns + jumpedPieceColumn;
+
+            int startLocationIndex = move.StartRow * state.Options.NumColumns + move.StartColumn;
+            int endLocationIndex = move.EndRow * state.Options.NumColumns + move.EndColumn;
+            if (state.Board[startLocationIndex].IsUnoccupied() || state.Board[startLocationIndex].Piece.Owner != state.CurrentPlayer
+                || state.Board[jumpedPieceIndex].IsUnoccupied() || state.Board[jumpedPieceIndex].Piece.Owner == state.CurrentPlayer
+                || !state.Board[endLocationIndex].IsUnoccupied())
+            {
+                return false;
+            }
+
+            if (!state.Board[startLocationIndex].Piece.IsKing)
+            {
+                int forwardDirection = 0;
+                if (state.CurrentPlayer.Team == Team.Red)
+                {
+                    forwardDirection = +1;
+                }
+                else if (state.CurrentPlayer.Team == Team.Black)
+                {
+                    forwardDirection = -1;
+                }
+
+                if (!(move.EndRow - move.StartRow == (forwardDirection * 2)))
+                {
+                    return false;
+                }
+            }
+
+            return true;
+        }
+
         // TODO: Have this method clone the current state, instead of modifying it.
         public CheckersState ApplyMove(CheckersMove newMove)
         {
@@ -337,8 +418,7 @@ namespace Checkers.Engine
             {
                 MakeKingMove makeKingMove = newMove as MakeKingMove;
                 int locationIndex = makeKingMove.Location.Row * Options.NumColumns + makeKingMove.Location.Column;
-                if (Board[locationIndex].IsUnoccupied() || Board[locationIndex].Piece.Owner != CurrentPlayer
-                    || Board[locationIndex].Piece.IsKing)
+                if (!IsMoveLegal(this, makeKingMove))
                 {
                     throw new InvalidOperationException("Can not make a kind at the requested location.");
                 }
@@ -354,8 +434,7 @@ namespace Checkers.Engine
                 SlidePieceMove slidePieceMove = newMove as SlidePieceMove;
                 int startLocationIndex = slidePieceMove.StartRow * Options.NumColumns + slidePieceMove.StartColumn;
                 int endLocationIndex = slidePieceMove.EndRow * Options.NumColumns + slidePieceMove.EndColumn;
-                if (Board[startLocationIndex].IsUnoccupied() || Board[startLocationIndex].Piece.Owner != CurrentPlayer
-                    || !Board[endLocationIndex].IsUnoccupied())
+                if (!IsMoveLegal(this, slidePieceMove))
                 {
                     throw new InvalidOperationException("Can not slide piece as requested.");
                 }
@@ -376,9 +455,7 @@ namespace Checkers.Engine
 
                 int startLocationIndex = jumpPieceMove.StartRow * Options.NumColumns + jumpPieceMove.StartColumn;
                 int endLocationIndex = jumpPieceMove.EndRow * Options.NumColumns + jumpPieceMove.EndColumn;
-                if (Board[startLocationIndex].IsUnoccupied() || Board[startLocationIndex].Piece.Owner != CurrentPlayer
-                    || Board[jumpedPieceIndex].IsUnoccupied() || Board[jumpedPieceIndex].Piece.Owner == CurrentPlayer
-                    || !Board[endLocationIndex].IsUnoccupied())
+                if (!IsMoveLegal(this, jumpPieceMove))
                 {
                     throw new InvalidOperationException("Can not jump piece as requested.");
                 }
