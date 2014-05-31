@@ -342,15 +342,69 @@ namespace Checkers.Engine
             }
             else if (newMove.GetType() == typeof(SlidePieceMove))
             {
-                throw new NotImplementedException();
+                SlidePieceMove slidePieceMove = newMove as SlidePieceMove;
+                int startLocationIndex = slidePieceMove.StartRow * Options.NumColumns + slidePieceMove.StartColumn;
+                int endLocationIndex = slidePieceMove.EndRow * Options.NumColumns + slidePieceMove.EndColumn;
+                if (Board[startLocationIndex].IsUnoccupied() || Board[startLocationIndex].Piece.Owner != CurrentPlayer
+                    || !Board[endLocationIndex].IsUnoccupied())
+                {
+                    throw new InvalidOperationException("Can not slide piece as requested.");
+                }
+
+                nextState = this.Copy();
+                nextState.PreviousState = this;
+                nextState.MovesThisTurn.Add(newMove);
+
+                nextState.Board[endLocationIndex].PlacePiece(nextState.Board[startLocationIndex].Piece);
+                nextState.Board[startLocationIndex].RemovePiece();
             }
             else if (newMove.GetType() == typeof(JumpPieceMove))
             {
-                throw new NotImplementedException();
+                JumpPieceMove jumpPieceMove = newMove as JumpPieceMove;
+                int jumpedPieceRow = jumpPieceMove.StartRow + (jumpPieceMove.EndRow - jumpPieceMove.StartRow) / 2;
+                int jumpedPieceColumn = jumpPieceMove.StartColumn + (jumpPieceMove.EndColumn - jumpPieceMove.StartColumn) / 2;
+                int jumpedPieceIndex = jumpedPieceRow * Options.NumColumns + jumpedPieceColumn;
+
+                int startLocationIndex = jumpPieceMove.StartRow * Options.NumColumns + jumpPieceMove.StartColumn;
+                int endLocationIndex = jumpPieceMove.EndRow * Options.NumColumns + jumpPieceMove.EndColumn;
+                if (Board[startLocationIndex].IsUnoccupied() || Board[startLocationIndex].Piece.Owner != CurrentPlayer
+                    || Board[jumpedPieceIndex].IsUnoccupied() || Board[jumpedPieceIndex].Piece.Owner == CurrentPlayer
+                    || !Board[endLocationIndex].IsUnoccupied())
+                {
+                    throw new InvalidOperationException("Can not jump piece as requested.");
+                }
+
+                nextState = this.Copy();
+                nextState.PreviousState = this;
+                nextState.MovesThisTurn.Add(newMove);
+
+                nextState.Board[endLocationIndex].PlacePiece(nextState.Board[startLocationIndex].Piece);
+                nextState.Board[startLocationIndex].RemovePiece();
+                nextState.Board[jumpedPieceIndex].Piece.MakeJumped();
             }
             else if (newMove.GetType() == typeof(EndTurnMove))
             {
-                throw new NotImplementedException();
+                nextState = this.Copy();
+                nextState.PreviousState = this;
+                nextState.MovesThisTurn.Add(newMove);
+
+                for (int i = 0; i < nextState.Board.Count; i++)
+                {
+                    if (!nextState.Board[i].IsUnoccupied() && nextState.Board[i].Piece.IsJumped)
+                    {
+                        nextState.Board[i].RemovePiece();
+                    }
+                }
+
+                CheckersState nextTurn = nextState.Copy();
+                nextTurn.PreviousState = nextState;
+                nextTurn.MovesThisTurn = new List<CheckersMove>();
+
+                int currentPlayerIndex = Options.Players.IndexOf(CurrentPlayer);
+                currentPlayerIndex = (currentPlayerIndex + 1) % Options.Players.Count;
+                nextTurn.CurrentPlayer = Options.Players[currentPlayerIndex];
+
+                nextState = nextTurn;
             }
             else
             {
