@@ -91,7 +91,12 @@ namespace Checkers.Engine
                     observer.UpdateState(newMoves);
                 }
 
-                lastMove = currentPlayer.GetMove();
+                lastMove = CurrentState.GetAutomaticMove();
+                if (lastMove == null)
+                {
+                    lastMove = currentPlayer.GetMove();
+                }
+
                 lastMove.PerformingPlayer = currentPlayer;
                 CurrentState = CurrentState.ApplyMove(lastMove);
 

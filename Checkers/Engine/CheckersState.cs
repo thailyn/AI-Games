@@ -301,6 +301,24 @@ namespace Checkers.Engine
             }
         }
 
+        public CheckersMove GetAutomaticMove()
+        {
+            CheckersPlayer currentPlayer = CurrentPlayer;
+            Team currentTeam = currentPlayer.Team;
+            int goalRow = currentTeam == Team.Red ? Options.NumRows - 1 : 0;
+
+            for (int i = goalRow * Options.NumColumns; i < (goalRow + 1) * Options.NumColumns; i++)
+            {
+                if (!Board[i].IsUnoccupied() && Board[i].Piece.Owner == currentPlayer
+                    && Board[i].Piece.IsKing == false)
+                {
+                    return new MakeKingMove(Board[i], currentPlayer);
+                }
+            }
+
+            return null;
+        }
+
         // TODO: Have this method clone the current state, instead of modifying it.
         public CheckersState ApplyMove(CheckersMove newMove)
         {
