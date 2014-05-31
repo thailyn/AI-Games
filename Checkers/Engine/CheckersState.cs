@@ -316,6 +316,15 @@ namespace Checkers.Engine
                 }
             }
 
+            if (MovesThisTurn.Count > 0)
+            {
+                CheckersMove previousMove = MovesThisTurn[MovesThisTurn.Count - 1];
+                if (previousMove is SlidePieceMove || previousMove is MakeKingMove)
+                {
+                    return new EndTurnMove();
+                }
+            }
+
             return null;
         }
 
