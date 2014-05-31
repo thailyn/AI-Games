@@ -54,8 +54,16 @@ namespace Checkers.Engine
 
         protected void PrintState(CheckersState currentState)
         {
+            System.Console.Write("  ");
+            for (int i = 0; i < currentState.Options.NumColumns; i++)
+            {
+                System.Console.Write(i);
+            }
+            System.Console.WriteLine();
+
             for (int i = 0; i < currentState.Options.NumRows; i++)
             {
+                System.Console.Write(i + " ");
                 for (int j = 0; j < currentState.Options.NumColumns; j++)
                 {
                     int currentIndex = i * currentState.Options.NumColumns + j;

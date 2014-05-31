@@ -57,7 +57,7 @@ namespace Checkers.Game
             }
             else
             {
-                Console.WriteLine("This is the current state:");
+                Console.WriteLine("This is the current state. {0}'s turn.", CurrentState.CurrentPlayer.Team.ToString());
                 PrintState(CurrentState);
 
                 System.Console.WriteLine();
