@@ -430,7 +430,23 @@ namespace Checkers.Engine
 
         public CheckersState Copy()
         {
-            throw new NotImplementedException();
+            CheckersState copy = new CheckersState(Options);
+            copy.Board = new List<Location>();
+            for (int i = 0; i < Board.Count; i++)
+            {
+                copy.Board.Add(Board[i].Copy());
+            }
+
+            copy.MovesThisTurn = new List<CheckersMove>();
+            for (int i = 0; i < MovesThisTurn.Count; i++)
+            {
+                copy.MovesThisTurn.Add(MovesThisTurn[i]);
+            }
+
+            copy.CurrentPlayer = CurrentPlayer;
+            copy.PreviousState = PreviousState;
+
+            return copy;
         }
     }
 }

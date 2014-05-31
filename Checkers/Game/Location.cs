@@ -61,6 +61,18 @@ namespace Checkers.Game
             return temp;
         }
 
+        public Location Copy()
+        {
+            Piece newPiece = null;
+            if (!IsUnoccupied())
+            {
+                newPiece = new Piece(Piece.Team, Piece.Owner, Piece.IsKing, Piece.IsJumped);
+            }
+
+            Location copy = new Location(Row, Column, newPiece);
+            return copy;
+        }
+
         public override string ToString()
         {
             if (!IsUnoccupied())
