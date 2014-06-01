@@ -166,6 +166,7 @@ namespace Checkers.Engine
         public IEnumerable<CheckersMove> GetAvailableMoves(CheckersState state)
         {
             CheckersMove previousMoveThisTurn = null;
+            bool onlyCanCapture = false;
             if (state.MovesThisTurn.Count > 0)
             {
                 // If the current player already slid a piece, he can not do anything else.
@@ -179,6 +180,7 @@ namespace Checkers.Engine
                 // If the player just jumped, he can always choose to end his turn.
                 if (previousMoveThisTurn is JumpPieceMove)
                 {
+                    onlyCanCapture = true;
                     yield return new EndTurnMove(state.CurrentPlayer);
                 }
             }
@@ -202,7 +204,7 @@ namespace Checkers.Engine
                     continue;
                 }
 
-                foreach (var move in GetAvailableMovesForPiece(this, location, forwardDirection, false))
+                foreach (var move in GetAvailableMovesForPiece(this, location, forwardDirection, onlyCanCapture))
                 {
                     yield return move;
                 }
