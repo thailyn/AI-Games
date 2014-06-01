@@ -1,4 +1,4 @@
-﻿using Checkers.Engine;
+﻿using Checkers.Core;
 using Checkers.Game;
 using Checkers.Game.Players;
 using System;

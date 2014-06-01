@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Checkers.Engine
+namespace Checkers.Core
 {
     public class CheckersMove : IMove<CheckersState, CheckersOptions, CheckersPlayer, CheckersMove>
     {

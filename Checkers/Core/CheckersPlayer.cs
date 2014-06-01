@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Checkers.Engine
+namespace Checkers.Core
 {
     public abstract class CheckersPlayer : IPlayer<CheckersState, CheckersOptions, CheckersMove, CheckersPlayer>
     {

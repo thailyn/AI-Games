@@ -41,11 +41,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Engine\CheckersGame.cs" />
-    <Compile Include="Engine\CheckersMove.cs" />
-    <Compile Include="Engine\CheckersOptions.cs" />
-    <Compile Include="Engine\CheckersPlayer.cs" />
-    <Compile Include="Engine\CheckersState.cs" />
+    <Compile Include="Core\CheckersGame.cs" />
+    <Compile Include="Core\CheckersMove.cs" />
+    <Compile Include="Core\CheckersOptions.cs" />
+    <Compile Include="Core\CheckersPlayer.cs" />
+    <Compile Include="Core\CheckersState.cs" />
     <Compile Include="Game\Players\ConsoleObserver.cs" />
     <Compile Include="Game\Players\HumanConsolePlayer.cs" />
     <Compile Include="Game\Location.cs" />

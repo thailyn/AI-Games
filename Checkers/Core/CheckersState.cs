@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Checkers.Engine
+namespace Checkers.Core
 {
     [Serializable]
     public class CheckersState : IState<CheckersOptions, CheckersPlayer, CheckersMove, CheckersState>

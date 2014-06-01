@@ -1,4 +1,4 @@
-﻿using Checkers.Engine;
+﻿using Checkers.Core;
 using System;
 using System.Collections.Generic;
 using System.Linq;
