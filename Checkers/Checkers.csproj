@@ -53,6 +53,7 @@
     <Compile Include="Game\Moves\MakeKingMove.cs" />
     <Compile Include="Game\Moves\SlidePieceMove.cs" />
     <Compile Include="Game\Piece.cs" />
+    <Compile Include="Game\Players\RandomPlayer.cs" />
     <Compile Include="Game\Team.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
