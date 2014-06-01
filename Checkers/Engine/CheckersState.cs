@@ -292,13 +292,6 @@ namespace Checkers.Engine
                     CheckersMove jumpPieceMove = new JumpPieceMove(location.Row, location.Column, jumpNewRow, jumpNewColumn,
                         location.Piece, state.Board[newIndex].Piece);
                     yield return jumpPieceMove;
-
-                    var newState = state.ApplyMove(jumpPieceMove);
-                    foreach (var move in GetAvailableMovesForPiece(newState,
-                        newState.Board[jumpNewIndex], forwardDirection, true))
-                    {
-                        yield return move;
-                    }
                 }
             }
         }
