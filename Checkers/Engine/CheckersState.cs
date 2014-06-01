@@ -287,13 +287,13 @@ namespace Checkers.Engine
                 if (!state.Board[newIndex].IsUnoccupied() && state.Board[newIndex].Piece.Owner != currentPlayer
                     && !state.Board[newIndex].Piece.IsJumped && state.Board[jumpNewIndex].IsUnoccupied())
                 {
-                    CheckersMove jumpPieceMove = new JumpPieceMove(location.Row, location.Column, newRow, newColumn,
+                    CheckersMove jumpPieceMove = new JumpPieceMove(location.Row, location.Column, jumpNewRow, jumpNewColumn,
                         location.Piece, state.Board[newIndex].Piece);
                     yield return jumpPieceMove;
 
                     var newState = state.ApplyMove(jumpPieceMove);
                     foreach (var move in GetAvailableMovesForPiece(newState,
-                        newState.Board[newIndex], forwardDirection, true))
+                        newState.Board[jumpNewIndex], forwardDirection, true))
                     {
                         yield return move;
                     }
