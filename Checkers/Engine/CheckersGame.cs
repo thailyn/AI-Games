@@ -100,8 +100,7 @@ namespace Checkers.Engine
                 lastMove.PerformingPlayer = currentPlayer;
                 CurrentState = CurrentState.ApplyMove(lastMove);
 
-                currentPlayerIndex = (currentPlayerIndex + 1) % Options.Players.Count;
-                currentPlayer = Options.Players[currentPlayerIndex];
+                currentPlayer = CurrentState.CurrentPlayer;
             }
 
             // notify players of end state
