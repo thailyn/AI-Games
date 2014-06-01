@@ -163,7 +163,7 @@ namespace Checkers.Engine
             return true;
         }
 
-        protected IEnumerable<CheckersMove> GetAvailableMoves(CheckersState state)
+        public IEnumerable<CheckersMove> GetAvailableMoves(CheckersState state)
         {
             CheckersMove previousMoveThisTurn = null;
             if (state.MovesThisTurn.Count > 0)
@@ -260,7 +260,7 @@ namespace Checkers.Engine
             #endregion
         }
 
-        public IEnumerable<CheckersMove> GetAvailableMovesForPieceInDirection(CheckersState state, Location location,
+        protected IEnumerable<CheckersMove> GetAvailableMovesForPieceInDirection(CheckersState state, Location location,
             int forwardDirection, int rowDirection, int columnDirection, bool onlyCanCapture)
         {
             CheckersPlayer currentPlayer = state.CurrentPlayer;
