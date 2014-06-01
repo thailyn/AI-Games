@@ -46,6 +46,7 @@
     <Compile Include="Engine\CheckersOptions.cs" />
     <Compile Include="Engine\CheckersPlayer.cs" />
     <Compile Include="Engine\CheckersState.cs" />
+    <Compile Include="Game\Players\ConsoleObserver.cs" />
     <Compile Include="Game\Players\HumanConsolePlayer.cs" />
     <Compile Include="Game\Location.cs" />
     <Compile Include="Game\Moves\EndTurnMove.cs" />
