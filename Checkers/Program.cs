@@ -15,14 +15,15 @@ namespace Checkers
         {
             var options = new CheckersOptions();
 
-            var playerOne = new HumanConsolePlayer(Team.Red, options);
-            var playerTwo = new HumanConsolePlayer(Team.Black, options);
+            var playerOne = new RandomPlayer(Team.Red, options);
+            var playerTwo = new RandomPlayer(Team.Black, options);
+
+            var observer = new ConsoleObserver(options);
 
             var game = new CheckersGame(options);
             game.AddPlayer(playerOne);
             game.AddPlayer(playerTwo);
-
-            playerOne.PrintCurrentState();
+            game.AddObserver(observer);
 
             game.Start();
 
