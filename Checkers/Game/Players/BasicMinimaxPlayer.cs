@@ -39,22 +39,23 @@ namespace Checkers.Game.Players
 
         public int BasicHeuristicFunction(CheckersState state, CheckersPlayer searchingPlayer)
         {
+            int winLossvalue = 0;
             List<CheckersPlayer> winningPlayers = null;
             if (state.IsEndState(out winningPlayers))
             {
                 if (winningPlayers.Count == 0 || winningPlayers.Count > 1)
                 {
-                    return 0;
+                    winLossvalue = 0;
                 }
 
                 var winningPlayer = winningPlayers[0];
                 if (searchingPlayer.Equals(winningPlayer))
                 {
-                    return int.MaxValue - 1;
+                    winLossvalue = -10000;
                 }
                 else
                 {
-                    return int.MinValue + 1;
+                    winLossvalue = 10000;
                 }
             }
 
@@ -89,8 +90,8 @@ namespace Checkers.Game.Players
                 }
             }
 
-            value = numSearchingPlayerPieces + 5 * numSearchingPlayerKings
-                - (numOtherPlayerPieces + 5 * numOtherPlayerKings);
+            value = 100 * numSearchingPlayerPieces + 500 * numSearchingPlayerKings
+                - (100 * numOtherPlayerPieces + 500 * numOtherPlayerKings) + winLossvalue;
 
             return value;
         }
