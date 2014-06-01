@@ -13,6 +13,67 @@ namespace Engine.Algorithms
         where V : IMove<W, T, U, V>
         where W : IState<T, U, V, W>
     {
+        public V Search(W initialState, Func<W, IEnumerable<V>> getAvailableMovesFunc, Func<W, U, int> heuristicFunc,
+            U searchingPlayer, int depth, bool maximize)
+        {
+            List<V> availableMoves = getAvailableMovesFunc(initialState).ToList();
+            int bestMoveValue = int.MinValue;
+            V bestMove = default(V);
+
+            foreach (var move in availableMoves)
+            {
+                int moveValue = MinimaxSearchStep(initialState.ApplyMove(move), getAvailableMovesFunc,
+                    heuristicFunc, searchingPlayer, depth - 1, false);
+                if (moveValue > bestMoveValue)
+                {
+                    bestMoveValue = moveValue;
+                    bestMove = move;
+                }
+            }
+
+            return bestMove;
+        }
+
+        protected int MinimaxSearchStep(W state, Func<W, IEnumerable<V>> getAvailableMovesFunc,
+            Func<W, U, int> heuristicFunc, U searchingPlayer, int depth, bool maximize)
+        {
+            List<U> winningPlayers = null;
+            if (state.IsEndState(out winningPlayers) || depth == 0)
+            {
+                return heuristicFunc(state, searchingPlayer);
+            }
+
+            if (maximize)
+            {
+                int bestValue = int.MinValue;
+                List<V> availableMoves = getAvailableMovesFunc(state).ToList();
+                foreach (var move in availableMoves)
+                {
+                    W nextState = state.ApplyMove(move);
+                    int val = MinimaxSearchStep(nextState, getAvailableMovesFunc, heuristicFunc,
+                        searchingPlayer, depth - 1, searchingPlayer.Equals(nextState.CurrentPlayer));
+                    bestValue = val > bestValue ? val : bestValue;
+                }
+
+                return bestValue;
+            }
+            else
+            {
+                int bestValue = int.MaxValue;
+                List<V> availableMoves = getAvailableMovesFunc(state).ToList();
+                foreach (var move in availableMoves)
+                {
+                    W nextState = state.ApplyMove(move);
+                    int val = MinimaxSearchStep(nextState, getAvailableMovesFunc, heuristicFunc,
+                        searchingPlayer, depth - 1, searchingPlayer.Equals(nextState.CurrentPlayer));
+                    bestValue = val < bestValue ? val : bestValue;
+                }
+
+                return bestValue;
+            }
+        }
+
+
         public V Search(W initialState, Func<W, IEnumerable<V>> getAvailableMovesFunc, U searchingPlayer, int depth, bool maximize)
         {
             List<V> availableMoves = getAvailableMovesFunc(initialState).ToList();
