@@ -217,6 +217,17 @@ namespace Checkers.Engine
             CheckersPlayer currentPlayer = state.CurrentPlayer;
             Piece piece = location.Piece;
 
+            // If a piece has just jumped and is not this piece, this piece can not make a move.
+            if (state.MovesThisTurn.Count > 0)
+            {
+                JumpPieceMove previousMove = state.MovesThisTurn[state.MovesThisTurn.Count - 1] as JumpPieceMove;
+                if (previousMove != null
+                    && (previousMove.EndRow != location.Row || previousMove.EndColumn != location.Column))
+                {
+                    yield break;
+                }
+            }
+
             #region Down left
             if (forwardDirection == 1 || piece.IsKing)
             {
