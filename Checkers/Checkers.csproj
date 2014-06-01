@@ -46,6 +46,7 @@
     <Compile Include="Core\CheckersOptions.cs" />
     <Compile Include="Core\CheckersPlayer.cs" />
     <Compile Include="Core\CheckersState.cs" />
+    <Compile Include="Game\Players\BasicMinimaxPlayer.cs" />
     <Compile Include="Game\Players\ConsoleObserver.cs" />
     <Compile Include="Game\Players\HumanConsolePlayer.cs" />
     <Compile Include="Game\Location.cs" />
