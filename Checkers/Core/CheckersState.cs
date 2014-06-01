@@ -204,7 +204,7 @@ namespace Checkers.Core
                     continue;
                 }
 
-                foreach (var move in GetAvailableMovesForPiece(this, location, forwardDirection, onlyCanCapture))
+                foreach (var move in GetAvailableMovesForPiece(state, location, forwardDirection, onlyCanCapture))
                 {
                     yield return move;
                 }
