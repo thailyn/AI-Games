@@ -63,10 +63,41 @@ namespace Checkers.Game
             IsJumped = true;
         }
 
-        // TODO: Return a meaningful value here!
         public override string ToString()
         {
-            return "*";
+            if (Team == Game.Team.Black)
+            {
+                if (IsKing)
+                {
+                    return "B";
+                }
+                else
+                {
+                    return "b";
+                }
+            }
+            else if (Team == Game.Team.Red)
+            {
+                if (IsKing)
+                {
+                    return "R";
+                }
+                else
+                {
+                    return "r";
+                }
+            }
+            else
+            {
+                if (IsKing)
+                {
+                    return "N";
+                }
+                else
+                {
+                    return "n";
+                }
+            }
         }
     }
 }

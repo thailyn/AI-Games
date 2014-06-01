@@ -83,39 +83,7 @@ namespace Checkers.Engine
                     else
                     {
                         Piece currentPiece = currentLocation.Piece;
-                        if (currentPiece.Team == Game.Team.Black)
-                        {
-                            if (currentPiece.IsKing)
-                            {
-                                System.Console.Write("B");
-                            }
-                            else
-                            {
-                                System.Console.Write("b");
-                            }
-                        }
-                        else if (currentPiece.Team == Game.Team.Red)
-                        {
-                            if (currentPiece.IsKing)
-                            {
-                                System.Console.Write("R");
-                            }
-                            else
-                            {
-                                System.Console.Write("r");
-                            }
-                        }
-                        else
-                        {
-                            if (currentPiece.IsKing)
-                            {
-                                System.Console.Write("N");
-                            }
-                            else
-                            {
-                                System.Console.Write("n");
-                            }
-                        }
+                        System.Console.Write(currentPiece.ToString());
                     }
                 }
 
